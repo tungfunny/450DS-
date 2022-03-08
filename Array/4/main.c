@@ -26,44 +26,23 @@ Output :
 
 #include<stdio.h>
 
-//swap
-void swap(int *a, int *b){
-    int temp = *a;
-    *a = *b;
-    *b = temp;
 
-}
-//short, positive, negative
-/*
-void shortArray(int array[], int size){
-    int start = 0;
-    int end = size-1;
-    while(start < end){
-        if(array[start] < 0){
-            swap(&array[start], &array[end]);
-            start++;
-            end--;
+void shortArray(int array[], int stack[]){
+    int size = 8;
+    int left = 0;
+    int right = size;
+    for(int i=0; i<size; i++){
+        //check a[i]
+        if(left == right) break;
+
+        int value = array[i];
+        if(array[i] > 0){
+            stack[left] = value;
+            left ++;
         }
-        else start++; end--;
-    }
-}
-*/
-
-void shortArray(int array[], int size){
-    int low = 0;
-    int mid = 0;
-    int high = size-1;
-
-    while(mid < high){
-        if(array[mid] < 0){
-                swap(&array[low], &array[mid]);
-                low++;
-                mid++;
-        }
-        if(array[mid]>=0){
-            swap(&array[high], &array[mid]);
-            mid++;
-            high--;
+        if(array[i] < 0){
+            stack[right] = value;
+            right--;
         }
     }
 }
@@ -76,9 +55,10 @@ void printArray(int array[], int size){
 }
 int main(){
     int array[] = {-5, 7, -3, -4, 9, 10, -1, 11};
-    int size = sizeof(array)/sizeof(array[0]);
-    shortArray(array, size);
-    printArray(array, size);
+    int size = 8;
+    int stack[size];
+    shortArray(array, stack);
+    printArray(stack, size);
     return 0;
 
 }
